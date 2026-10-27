@@ -1,0 +1,67 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#07100a">
+  <title>EmpQR | Employee Profiles</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+  <div class="ambient"></div>
+  <header class="topbar">
+    <a class="brand" href="./"><span class="brand-mark">E</span><span>Emp<span class="green">QR</span><small>EMPLOYEE PROFILE SYSTEM</small></span></a>
+    <nav><button class="nav-btn active" id="profileNav">Profiles</button><button class="nav-btn" id="adminNav">Admin dashboard</button></nav>
+  </header>
+
+  <main>
+    <section id="profileView" class="view">
+      <div class="page-heading"><div><p class="eyebrow">DIGITAL EMPLOYEE ID</p><h1>Employee <span class="green">Profile</span></h1><p class="muted">Scan the employee QR code to view verified public work details.</p></div><span class="status-pill"><i></i> LIVE PROFILE</span></div>
+      <div id="profileMount"></div>
+    </section>
+
+    <section id="adminView" class="view hidden">
+      <div class="page-heading"><div><p class="eyebrow">COMPANY WORKSPACE</p><h1>Admin <span class="green">Dashboard</span></h1><p class="muted">Manage employees, generate QR codes and print ID cards.</p></div><span class="status-pill"><i></i> ADMIN AREA</span></div>
+      <div id="loginPanel" class="panel login-panel">
+        <h2>Admin sign in</h2><p class="muted">Demo mode is enabled by default. For a real company deployment, configure Firebase Authentication and Firestore using README.md.</p>
+        <label>Email<input id="adminEmail" type="email" placeholder="admin@company.com" autocomplete="username"></label>
+        <label>Password<input id="adminPassword" type="password" placeholder="Enter password" autocomplete="current-password"></label>
+        <button class="primary" id="loginBtn">Sign in</button>
+        <p id="loginMessage" class="message">Demo access: use <b>admin@demo.com</b> / <b>EmpQR@123</b></p>
+      </div>
+      <div id="dashboardPanel" class="hidden">
+        <div class="toolbar"><div><h2>Employees <span id="employeeCount" class="count">0</span></h2><p class="muted">Employee records in this workspace</p></div><div class="toolbar-actions"><input id="searchInput" class="search" placeholder="Search employees…"><button class="primary" id="addEmployeeBtn">+ Add employee</button><button class="ghost" id="logoutBtn">Sign out</button></div></div>
+        <div class="table-wrap"><table><thead><tr><th>Employee</th><th>Employee ID</th><th>Department / Role</th><th>Status</th><th>Actions</th></tr></thead><tbody id="employeeRows"></tbody></table></div>
+        <p class="footnote">Demo records are saved in this browser only. Connect Firebase for shared company-wide storage.</p>
+      </div>
+    </section>
+  </main>
+
+  <dialog id="employeeDialog">
+    <form id="employeeForm" method="dialog">
+      <div class="dialog-head"><div><p class="eyebrow">EMPLOYEE RECORD</p><h2 id="formTitle">Add employee</h2></div><button type="button" class="icon-btn" id="closeDialog" aria-label="Close">✕</button></div>
+      <input type="hidden" id="originalId">
+      <div class="form-grid">
+        <label>Full name *<input id="fullName" required placeholder="e.g. Sujith Kumar"></label>
+        <label>Employee ID *<input id="employeeId" required placeholder="e.g. EMP001"></label>
+        <label>Designation *<input id="designation" required placeholder="e.g. Full Stack Developer"></label>
+        <label>Department<input id="department" placeholder="e.g. Engineering"></label>
+        <label>Email<input id="email" type="email" placeholder="employee@company.com"></label>
+        <label>Phone<input id="phone" type="tel" placeholder="+91 …"></label>
+        <label>Photo URL<input id="photoUrl" type="url" placeholder="https://… (optional)"></label>
+        <label>LinkedIn URL<input id="linkedin" type="url" placeholder="https://linkedin.com/in/…"></label>
+        <label>GitHub URL<input id="github" type="url" placeholder="https://github.com/…"></label>
+        <label>Website URL<input id="website" type="url" placeholder="https://company.com"></label>
+        <label class="full">Short bio<textarea id="bio" rows="3" placeholder="A short professional introduction"></textarea></label>
+      </div>
+      <div class="dialog-actions"><button type="button" class="ghost" id="cancelForm">Cancel</button><button type="submit" class="primary">Save employee</button></div>
+      <p id="formMessage" class="message"></p>
+    </form>
+  </dialog>
+  <div id="toast" role="status" class="toast"></div>
+  <footer><span>EmpQR</span> · Digital employee identity · <span id="footerMode">Demo mode</span></footer>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
